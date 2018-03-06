@@ -1,26 +1,26 @@
 module Hotel
   class Booking # This class will control reservations
 
-  # Constructor
-  # reservations_list = []
+    attr_reader :reservations_list
 
-  #Method to add a reservation
-  # def add_reservation
-    # will need to check first if the room is available according to the date range
-    # if it is available the new reservation will be done and pushed into the
-    # array @reservations_list
-    # return reservation_new
-    # if no available roooms raise and ArgumentError saying that there is no rooms
-    # available for that date range.
+    def initialize
+      @reservations_list = []
+    end
 
-  # Method to return the list of the reservations per day
-  # def reservations_per_day
-    # will create an array of the reservations of the date specified
-    # reservations_ofthat_day = []
-    # will need to iterate through the @reservations_list and see
-    # if a reservation is done for the specific date
-    # if it is, then the reservation will be pushed into the array name reservations_ofthat_day
-    # return reservations_ofthat_day
+    def add_reservation(checkin, checkout)
+      reservation_new = Hotel::Reservation.new(checkin, checkout)
+      @reservations_list << reservation_new
+    end
+
+    def reservations_per_day(date)
+      reservations_list_per_day = []
+      @reservations_list.each do |reservation|
+        if reservation.range_of_dates.include?(date)
+          reservations_list_per_day << reservation
+        end
+      end
+      return reservations_list_per_day
+    end
 
   end #class
 end #module
