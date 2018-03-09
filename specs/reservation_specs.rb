@@ -5,7 +5,8 @@ describe 'Reservation class' do
   before do
     @start_date = Date.new(2018, 8, 20)
     @end_date = Date.new(2018, 8, 27)
-    @reservation_new = Hotel::Reservation.new(@start_date, @end_date)
+    @reservation_new = Hotel::Reservation.new(@start_date, @end_date, @room_number)
+    @room_number = 5
   end
 
   describe 'Initialize' do
@@ -13,6 +14,13 @@ describe 'Reservation class' do
       @reservation_new.must_be_instance_of Hotel::Reservation
     end
 
+    it "does not initialize incorrect dates like using the checkin date for checkout also" do
+      proc{Hotel::Reservation.new(@start_date, @start_date, @room_number)}.must_raise ArgumentError
+    end
+
+    it "does not initialize incorrect dates like using the checkout date for checkin also" do
+      proc{Hotel::Reservation.new(@end_date, @end_date, @room_number)}.must_raise ArgumentError
+    end
   end
 
   describe "cost_reservation method " do
