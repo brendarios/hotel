@@ -31,7 +31,7 @@ describe 'Booking class' do
       @end_date = Date.new(2018, 8, 27)
     end
 
-    it "Creates an array of reservations" do
+    it "Creates a new reservation" do
       day1 = Date.new(2018,11,8)
       day2 = Date.new(2018,11,13)
       day3 = Date.new(2018,11,25)
@@ -44,20 +44,24 @@ describe 'Booking class' do
       @booking.add_reservation(day4,day5)
       @booking.add_reservation(day5,day6)
       @booking.add_reservation(day6,day7)
-      @booking.list_reservations.length.must_equal 5
-      @booking.add_reservation(@start_date,@end_date).must_be_instance_of Array
+      @booking.reservations_list.length.must_equal 5
+      @booking.reservations_list.must_be_instance_of Array
+      @booking.add_reservation(@start_date,@end_date).must_be_instance_of Hotel::Reservation
     end
+
 
     it "Creates an instance of reservation for a date range" do
       new_reservation = @booking.add_reservation(@start_date,@end_date)
       new_reservation.must_be_instance_of Hotel::Reservation
     end
 
-    it 'does not create   a reservation if no rooms are available' do
+    it 'does not create a reservation if no rooms are available' do
+      day1 = Date.new(2018,11,8)
+      day2 = Date.new(2018,11,13)
       20.times do
-        @booking.add_reservation(@day1,@day2)
+        @booking.add_reservation(day1,day2)
       end
-      @booking.add_reservation(@day1,@day2).must_raise ArgumentError
+      proc{@booking.add_reservation(day1,day2)}.must_raise ArgumentError
     end
 
     it 'changes the hash of rooms' do
@@ -69,10 +73,10 @@ describe 'Booking class' do
       @booking.add_reservation(day1,day2)
       @booking.add_reservation(day3,day4)
       @booking.add_reservation(day4,day5)
-      @booking.rooms["1"].length.must_equal 3
+      @booking.rooms_list["1"].length.must_equal 3
       @booking.add_reservation(day4,day5)
-      @booking.rooms["2"].length.must_equal 1
-      @booking.rooms["3"].length.must_equal 0
+      @booking.rooms_list["2"].length.must_equal 1
+      @booking.rooms_list["3"].length.must_equal 0
     end
 
   end
@@ -112,32 +116,33 @@ describe "reservations_per_day method" do
     @booking.reservations_per_day(@date1).length.must_equal 2
   end
 
-  describe 'avaliable_rooms_daterange method'
-  before do
-    @day1 = Date.new(2018,12,13)
-    @day2 = Date.new(2018,12,19)
-    @day3 = Date.new(2018,12,7)
-    @day4 = Date.new(2018,12,12)
-    @day5 = Date.new(2018,12,24)
-    @day6 = Date.new(2018,12,14)
-    @day7 = Date.new(2018,12,16)
-    @all_rooms = []
-    20.times do |i|
-      @all_rooms << "#{i+1}"
+  describe 'avaliable_rooms_daterange method' do
+    before do
+      @day1 = Date.new(2018,12,13)
+      @day2 = Date.new(2018,12,19)
+      @day3 = Date.new(2018,12,07)
+      @day4 = Date.new(2018,12,12)
+      @day5 = Date.new(2018,12,24)
+      @day6 = Date.new(2018,12,14)
+      @day7 = Date.new(2018,12,16)
+      @all_rooms = []
+      20.times do |i|
+        @all_rooms << "#{i+1}"
+      end
     end
-  end
 
-  it "returns all the  rooms if there is 0 reservations for that date range" do
-    @booking.avaliable_rooms_daterange(@day1, @day2).must_equal @all_rooms
-  end
-
-  it "returns the rooms avaliables" do
-    3.times do
-      @booking.add_reservation(@day1, @day2)
+    it "returns all the  rooms if there is 0 reservations for that date range" do
+      @booking.avaliable_rooms_daterange(@day1, @day2).must_equal @all_rooms
     end
-    @booking.add_reservation(@day3,@day4)
-    @booking.add_reservation(@day1,@day5)
-    @booking.avaliable_rooms_daterange(@day6,@day7).must_equal @all_rooms[4..19]
-  end
 
+    it "returns the rooms avaliables" do
+      3.times do
+        @booking.add_reservation(@day1, @day2)
+      end
+      @booking.add_reservation(@day3,@day4)
+      @booking.add_reservation(@day1,@day5)
+      @booking.avaliable_rooms_daterange(@day6,@day7).must_equal @all_rooms[4..19]
+    end
+
+  end
 end

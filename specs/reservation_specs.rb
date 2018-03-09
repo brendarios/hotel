@@ -5,8 +5,8 @@ describe 'Reservation class' do
   before do
     @start_date = Date.new(2018, 8, 20)
     @end_date = Date.new(2018, 8, 27)
-    @reservation_new = Hotel::Reservation.new(@start_date, @end_date, @room_number)
     @room_number = 5
+    @reservation_new = Hotel::Reservation.new(@start_date, @end_date, @room_number)
   end
 
   describe 'Initialize' do

@@ -1,8 +1,7 @@
 module Hotel
   class Booking
 
-    attr_reader :reservations_list
-
+    attr_reader :reservations_list, :rooms_list
     def initialize
       @reservations_list = []
       @rooms_list = {}
@@ -18,7 +17,7 @@ module Hotel
 
     def is_available?(room_number, dates_to_reserve)
       available = true
-      dates_to_reserve = Hotel::DatesRange.new(@checkin, @checkout)
+
       @rooms_list[room_number].each do |dates|
         if dates_to_reserve.overlap?(dates)
           available = false
@@ -29,7 +28,7 @@ module Hotel
 
     def avaliable_rooms_daterange(checkin, checkout)
       list_availables = []
-      date_range = Hotel::DateRange.new(checkin,checkout)
+      date_range = Hotel::DatesRange.new(checkin,checkout)
       @rooms_list.each do |room_number, dates|
         if is_available?(room_number, date_range)
           list_availables  << room_number
@@ -44,7 +43,7 @@ module Hotel
         if  is_available?(room_number, dates_to_reserve)
           @rooms_list[room_number] << dates_to_reserve
           new_reservation = Hotel::Reservation.new(checkin, checkout, room_number)
-          @list_reservations << new_reservation
+          @reservations_list << new_reservation
           return new_reservation
         end
       end

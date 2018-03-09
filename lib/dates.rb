@@ -12,7 +12,7 @@ module Hotel
 
     def date_validation
       return true if @checkin < @checkout
-      raise StandardError
+      raise ArgumentError.new("Your date is not a valid input")
     end
 
     def amount_days
@@ -24,7 +24,11 @@ module Hotel
       return false
     end
 
-    # need to make a method to deal with overlapping
+    def overlap?(another)
+      return true if another.checkin <= self.checkin && another.checkout > self.checkin
+      return true if another.checkin >= self.checkin && another.checkin < self.checkout
+      return false
+    end
 
   end
 end

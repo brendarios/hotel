@@ -1,5 +1,7 @@
 module Hotel
 
+PRICE_PER_NIGHT = 200
+
   class Reservation
     attr_reader :checkin, :checkout, :range_of_dates, :room_number
 
