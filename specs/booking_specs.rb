@@ -145,4 +145,30 @@ describe "reservations_per_day method" do
     end
 
   end
+  describe 'capacity_for_block_rooms? method' do
+
+    before do
+      @checkin = Date.new(2018,12,7)
+      @checkout = Date.new(2018,12,13)
+    end
+
+    it 'returns false if it is not possible to create block' do
+      16.times do
+        @booking.add_reservation(@checkin, @checkout)
+      end
+      @booking.capacity_for_block_rooms?(@checkin, @checkout,5).must_equal false
+    end
+
+    it 'raises an error if the number of rooms to block is greater than 5'  do
+      proc{@booking.capacity_for_block_rooms?(@checkin, @checkout, 8)}.must_raise ArgumentError
+    end
+
+    it 'returns true if it is possible to create the block' do
+      14.times do
+        @booking.add_reservation(@checkin, @checkout)
+      end
+      @booking.capacity_for_block_rooms?(@checkin, @checkout,5).must_equal true
+    end
+
+  end
 end

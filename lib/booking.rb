@@ -1,4 +1,8 @@
 module Hotel
+
+  Amount_Rooms_Hotel = 20
+  Max_Block_Rooms = 5
+
   class Booking
 
     attr_reader :reservations_list, :rooms_list
@@ -10,7 +14,7 @@ module Hotel
     end
 
     def setup_rooms
-      20.times do |i|
+      Amount_Rooms_Hotel.times do |i|
         @rooms_list["#{i + 1}"] = []
       end
     end
@@ -60,14 +64,12 @@ module Hotel
       return reservations_list_per_day
     end
 
-    # Pseudocode to be able to create a block of rooms
-    # def capacity_block_rooms? (checkin, checkout, num_rooms_to_block)
-    # According to the requirements of the project a block can contain a maximum of 5 rooms
-      # raise an error if num_rooms_to_block is > 5.
-      # using the method avaliable_rooms_daterange check if the length of list of available rooms
-      # is >= to the numbers rooms to be blocked
-      # if true return true otherwise return false.
 
+    def capacity_for_block_rooms?(checkin, checkout, num_rooms_to_block)
+      raise ArgumentError.new('The maximum of rooms to block is 5') if num_rooms_to_block > Max_Block_Rooms
+      return true if avaliable_rooms_daterange(checkin, checkout).length >= num_rooms_to_block
+      return false
+    end
 
   end
 end
