@@ -171,4 +171,24 @@ describe "reservations_per_day method" do
     end
 
   end
+
+  describe 'building_block_rooms method' do
+    before do
+      @checkin = Date.new(2018,12,7)
+      @checkout = Date.new(2018,12,13)
+      @num_rooms_to_block = 5
+      @discounted_rate = 120
+
+    end
+
+    it 'returns an array of blocked rooms if there is enough rooms available' do
+      @booking.building_block_rooms(@checkin, @checkout, @num_rooms_to_block,@discounted_rate).must_be_instance_of Hotel::BlockRooms
+      @booking.building_block_rooms(@checkin, @checkout, @num_rooms_to_block,@discounted_rate).must_be_kind_of Array
+    end
+
+    it 'reserves a room from within a block of rooms' do
+      @booking.building_block_rooms(@checkin, @checkout, @num_rooms_to_block,@discounted_rate)
+      @booking.reservations_list.length.must_equal 5
+    end
+  end
 end

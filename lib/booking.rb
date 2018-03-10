@@ -64,12 +64,20 @@ module Hotel
       return reservations_list_per_day
     end
 
-
     def capacity_for_block_rooms?(checkin, checkout, num_rooms_to_block)
       raise ArgumentError.new('The maximum of rooms to block is 5') if num_rooms_to_block > Max_Block_Rooms
       return true if avaliable_rooms_daterange(checkin, checkout).length >= num_rooms_to_block
       return false
     end
 
+    #Pseudocode for a method to create a block of rooms
+    def building_block_rooms(checkin, checkout, num_rooms_to_block, discounted_rate)
+      # Create an array of the rooms in the block
+      # Use method capacity_for_block_rooms to check if there is capacity for blocking rooms.
+      # if its true then create reservations in a loop that runs the amount of num_rooms_to_block
+      # shuffle the reservations into the array of rooms in the block.
+      # the method should return a new instance of class BlockRooms
+     return Hotel::BlockRooms.new(checkin, checkout, num_rooms_to_block, discounted_rate)
+    end
   end
 end
