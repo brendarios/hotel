@@ -59,5 +59,15 @@ module Hotel
       end
       return reservations_list_per_day
     end
+
+    # Pseudocode to be able to create a block of rooms
+    # def capacity_block_rooms? (checkin, checkout, num_rooms_to_block)
+    # According to the requirements of the project a block can contain a maximum of 5 rooms
+      # raise an error if num_rooms_to_block is > 5.
+      # using the method avaliable_rooms_daterange check if the length of list of available rooms
+      # is >= to the numbers rooms to be blocked
+      # if true return true otherwise return false.
+
+
   end
 end

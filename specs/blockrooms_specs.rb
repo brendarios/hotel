@@ -14,7 +14,6 @@ describe 'BlockRooms class' do
     it "Can be created" do
       @new_block.must_be_instance_of Hotel::BlockRooms
     end
-
   end
 
   describe "available_room_in_block? method" do
