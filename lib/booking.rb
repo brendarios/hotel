@@ -5,7 +5,7 @@ module Hotel
 
   class Booking
 
-    attr_reader :reservations_list, :rooms_list
+    attr_reader :rooms_list, :reservations_list
     def initialize
       @reservations_list = []
       @rooms_list = {}
@@ -14,8 +14,8 @@ module Hotel
     end
 
     def setup_rooms
-      Amount_Rooms_Hotel.times do |i|
-        @rooms_list["#{i + 1}"] = []
+      Amount_Rooms_Hotel.times do |num|
+        @rooms_list["#{num + 1}"] = []
       end
     end
 
@@ -70,13 +70,14 @@ module Hotel
       return false
     end
 
-    #Pseudocode for a method to create a block of rooms
     def building_block_rooms(checkin, checkout, num_rooms_to_block, discounted_rate)
-      # Create an array of the rooms in the block
-      # Use method capacity_for_block_rooms to check if there is capacity for blocking rooms.
-      # if its true then create reservations in a loop that runs the amount of num_rooms_to_block
-      # shuffle the reservations into the array of rooms in the block.
-      # the method should return a new instance of class BlockRooms
+      array_rooms_blocked = []
+      if capacity_for_block_rooms?(checkin, checkout, num_rooms_to_block)
+        num_rooms_to_block.times do
+          reservation_block_room = add_reservation(checkin, checkout)
+          array_rooms_blocked << reservation_block_room.room_number
+        end
+      end
      return Hotel::BlockRooms.new(checkin, checkout, num_rooms_to_block, discounted_rate)
     end
   end
