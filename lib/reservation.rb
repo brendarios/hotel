@@ -13,7 +13,7 @@ PRICE_PER_NIGHT = 200
     end
 
     def cost_reservation
-      @price_per_night * @range_of_dates.amount_days
+      (@price_per_night * @range_of_dates.amount_days).to_f
     end
 
   end

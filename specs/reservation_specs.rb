@@ -9,8 +9,8 @@ describe 'Reservation class' do
     @reservation_new = Hotel::Reservation.new(@start_date, @end_date, @room_number)
   end
 
-  describe 'Initialize' do
-    it "Can be created" do
+  describe 'Initialize method' do
+    it "can be created" do
       @reservation_new.must_be_instance_of Hotel::Reservation
     end
 
@@ -25,9 +25,11 @@ describe 'Reservation class' do
 
   describe "cost_reservation method " do
 
-    it "Returns the cost of a reservation" do
+    it "returns the cost of a reservation" do
         @reservation_new.cost_reservation.must_equal 1400
+        @reservation_new.cost_reservation.must_be_kind_of Float
     end
+
 
   end
 end
