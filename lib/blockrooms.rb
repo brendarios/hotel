@@ -1,8 +1,8 @@
 module Hotel
   class BlockRooms
 
-    def initialize(checkin, checkout, blocked_rooms, rate)
-      @price_per_night = rate
+    def initialize(checkin, checkout, blocked_rooms, discounted_rate)
+      @price_per_night = discounted_rate.to_f
       @days_range = Hotel::DatesRange.new(checkin, checkout)
       @blocked_rooms = blocked_rooms
     end
@@ -18,7 +18,7 @@ module Hotel
     end
 
     def total_cost_block_room
-      @price_per_night * @days_range.amount_days
+      (@price_per_night * @days_range.amount_days)
     end
 
   end
