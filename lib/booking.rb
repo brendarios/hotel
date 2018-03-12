@@ -20,14 +20,14 @@ module Hotel
     end
 
     def is_available?(room_number, dates_to_reserve)
-      available = true
+      is_available = true
 
       @rooms_list[room_number].each do |dates|
         if dates_to_reserve.overlap?(dates)
-          available = false
+          is_available = false
         end
       end
-      return available
+      return is_available
     end
 
     def avaliable_rooms_daterange(checkin, checkout)

@@ -26,6 +26,36 @@ describe 'Booking class' do
     end
   end
 
+  describe 'avaliable_rooms_daterange method' do
+    before do
+      @day1 = Date.new(2018,12,13)
+      @day2 = Date.new(2018,12,19)
+      @day3 = Date.new(2018,12,07)
+      @day4 = Date.new(2018,12,12)
+      @day5 = Date.new(2018,12,24)
+      @day6 = Date.new(2018,12,14)
+      @day7 = Date.new(2018,12,16)
+      @all_rooms = []
+      20.times do |num|
+        @all_rooms << "#{num+1}"
+      end
+    end
+
+    it "returns the rooms avaliables in the date range" do
+      5.times do
+        @booking.add_reservation(@day1, @day2)
+      end
+      @booking.add_reservation(@day3,@day4)
+      @booking.add_reservation(@day4,@day6)
+      @booking.avaliable_rooms_daterange(@day6,@day7).must_equal @all_rooms[5..19]
+    end
+
+    it "returns all the  rooms if there is 0 reservations for that date range" do
+      @booking.avaliable_rooms_daterange(@day1, @day2).must_equal @all_rooms
+    end
+
+  end
+
   describe "add_reservation method " do
     before do
       @start_date = Date.new(2018, 8, 20)
@@ -127,35 +157,7 @@ describe "reservations_per_day method" do
     @booking.reservations_per_day(@date1).length.must_equal 2
   end
 
-  describe 'avaliable_rooms_daterange method' do
-    before do
-      @day1 = Date.new(2018,12,13)
-      @day2 = Date.new(2018,12,19)
-      @day3 = Date.new(2018,12,07)
-      @day4 = Date.new(2018,12,12)
-      @day5 = Date.new(2018,12,24)
-      @day6 = Date.new(2018,12,14)
-      @day7 = Date.new(2018,12,16)
-      @all_rooms = []
-      20.times do |num|
-        @all_rooms << "#{num+1}"
-      end
-    end
 
-    it "returns the rooms avaliables in the date range" do
-      5.times do
-        @booking.add_reservation(@day1, @day2)
-      end
-      @booking.add_reservation(@day3,@day4)
-      @booking.add_reservation(@day4,@day6)
-      @booking.avaliable_rooms_daterange(@day6,@day7).must_equal @all_rooms[5..19]
-    end
-
-    it "returns all the  rooms if there is 0 reservations for that date range" do
-      @booking.avaliable_rooms_daterange(@day1, @day2).must_equal @all_rooms
-    end
-
-  end
   describe 'capacity_for_block_rooms? method' do
 
     before do

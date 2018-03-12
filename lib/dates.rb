@@ -1,6 +1,6 @@
 module Hotel
 
-  class DatesRange #This class manages the date range
+  class DatesRange
 
     attr_reader :checkin, :checkout
 

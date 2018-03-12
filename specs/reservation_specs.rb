@@ -29,7 +29,5 @@ describe 'Reservation class' do
         @reservation_new.cost_reservation.must_equal 1400
         @reservation_new.cost_reservation.must_be_kind_of Float
     end
-
-
   end
 end

@@ -54,6 +54,4 @@ describe 'BlockRooms class' do
     end
 
   end
-
-
 end

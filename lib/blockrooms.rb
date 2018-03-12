@@ -1,4 +1,5 @@
 module Hotel
+  
   class BlockRooms
 
     def initialize(checkin, checkout, blocked_rooms, discounted_rate)
