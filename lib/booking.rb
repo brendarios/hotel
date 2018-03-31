@@ -1,7 +1,7 @@
 module Hotel
 
-  Amount_Rooms_Hotel = 20
-  Max_Block_Rooms = 5
+  AMOUNT_ROOMS_HOTEL = 20
+  MAX_BLOCKED_ROOMS = 5
 
   class Booking
 
@@ -14,7 +14,7 @@ module Hotel
     end
 
     def setup_rooms
-      Amount_Rooms_Hotel.times do |num|
+      AMOUNT_ROOMS_HOTEL.times do |num|
         @rooms_list["#{num + 1}"] = []
       end
     end
@@ -65,7 +65,7 @@ module Hotel
     end
 
     def capacity_for_block_rooms?(checkin, checkout, num_rooms_to_block)
-      raise ArgumentError.new('The maximum of rooms to block is 5') if num_rooms_to_block > Max_Block_Rooms
+      raise ArgumentError.new('The maximum of rooms to block is 5') if num_rooms_to_block > MAX_BLOCKED_ROOMS
       return true if avaliable_rooms_daterange(checkin, checkout).length >= num_rooms_to_block
       return false
     end
